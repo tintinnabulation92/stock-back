@@ -14,14 +14,14 @@ public class Offer {
 
     private String name;
 
-    private String description;
+    private String price;
 
     public Offer() {
     }
 
-    public Offer(String name, String description) {
+    public Offer(String name, String price) {
         this.name = name;
-        this.description = description;
+        this.price = price;
     }
 
     public Long getId() {
@@ -40,12 +40,12 @@ public class Offer {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPrice() {
+        return price;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
 
