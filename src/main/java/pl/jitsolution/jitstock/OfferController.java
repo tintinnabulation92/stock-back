@@ -17,7 +17,7 @@ public class OfferController {
 
     @RequestMapping("/api/offers")
     public List<Offer> getAllOffers() {
-        System.out.println("Hello World");
+        int integer =5;
         List<Offer> offerList = new ArrayList<>();
         offerRepository.findAll().forEach(offerList::add);
         return offerList;
