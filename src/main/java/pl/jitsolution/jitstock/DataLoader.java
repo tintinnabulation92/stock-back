@@ -14,7 +14,7 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments arg) throws Exception {
-    offerRepository.save(new Offer("Banany", "3.50zł/kg"));
+    offerRepository.save(new Offer("Jablka", "3.50zł/kg"));
     offerRepository.save(new Offer("Marchew", "2.20zł/kg"));
     offerRepository.save(new Offer("Pomarańcze", "5.99zł/kg"));
     }
