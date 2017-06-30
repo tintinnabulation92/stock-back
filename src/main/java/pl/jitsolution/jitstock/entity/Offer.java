@@ -1,4 +1,4 @@
-package pl.jitsolution.jitstock;
+package pl.jitsolution.jitstock.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
