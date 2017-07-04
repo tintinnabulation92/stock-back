@@ -9,15 +9,17 @@ import pl.jitsolution.jitstock.model.Quality;
 import pl.jitsolution.jitstock.model.Unit;
 import pl.jitsolution.jitstock.model.entity.Offer;
 import pl.jitsolution.jitstock.repository.OfferRepository;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 @Component
 public class OfferProvider implements ApplicationRunner {
+
+
     @Autowired
     private OfferRepository offerRepository;
     @Override
     public void run(ApplicationArguments arg) throws Exception {
+
         Offer o1 = new Offer();
         o1.setName("ABC1");
         o1.setOfferType(OfferType.SELL);

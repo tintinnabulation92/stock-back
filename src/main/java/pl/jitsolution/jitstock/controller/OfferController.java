@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.jitsolution.jitstock.model.entity.Offer;
 import pl.jitsolution.jitstock.repository.OfferRepository;
-
 import java.util.ArrayList;
 import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class OfferController {
@@ -24,10 +24,13 @@ public class OfferController {
     private OfferRepository offerRepository;
 
     @RequestMapping(value= GET_ALL_OFFERS)
-    public List<Offer> getAllOffers() {
+    public ResponseEntity<List<Offer>> getAllOffers() {
         List<Offer> offerList = new ArrayList<>();
         offerRepository.findAll().forEach(offerList::add);
-        return offerList;
+        if (offerList.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(offerList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = CREATE_OFFER)
