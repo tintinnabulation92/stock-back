@@ -16,6 +16,7 @@ public class DataBaseConfiguration {
     ServletRegistrationBean h2servletRegistration(){
         ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings("/console/*");
+        registrationBean.addInitParameter("webAllowOthers", "true");
         return registrationBean;
     }
 }
