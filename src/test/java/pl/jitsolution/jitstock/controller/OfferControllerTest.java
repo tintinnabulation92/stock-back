@@ -36,7 +36,6 @@ import static org.hamcrest.Matchers.is;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.json;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -183,6 +182,7 @@ public class OfferControllerTest {
     @Test
     public void readOffersWhenNoContent() throws Exception {
         //GIVEN
+
         //Empty table
 
         //WHEN

@@ -5,7 +5,6 @@ import pl.jitsolution.jitstock.model.OfferType;
 import pl.jitsolution.jitstock.model.Quality;
 import pl.jitsolution.jitstock.model.Unit;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,15 +21,19 @@ public class Offer implements Serializable{
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private OfferType offerType;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Enumerated(EnumType.STRING)
     private Quality quality;
 
     @Column(nullable= false, scale=6)
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     private LocalDateTime publishDate;
