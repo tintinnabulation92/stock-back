@@ -1,4 +1,4 @@
-package pl.jitsolution.jitstock;
+package pl.jitsolution.jitstock.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -11,10 +11,12 @@ import pl.jitsolution.jitstock.model.Unit;
 import pl.jitsolution.jitstock.model.entity.Offer;
 import pl.jitsolution.jitstock.repository.OfferRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Component
-public class DataLoader implements ApplicationRunner {
+public class OfferProvider implements ApplicationRunner {
 
     @Autowired
     private OfferRepository offerRepository;
@@ -26,28 +28,25 @@ public class DataLoader implements ApplicationRunner {
         o1.setName("ABC1");
         o1.setOfferType(OfferType.SELL);
         o1.setCategory(Category.FRUITS);
-        o1.setPrice(1.5f);
+        o1.setPrice(BigDecimal.valueOf(1.5));
         o1.setQuality(Quality.I);
         o1.setUnit(Unit.KG);
-        o1.setPublishDate(LocalDateTime.now());
 
         Offer o2 = new Offer();
         o2.setName("ABC2");
         o2.setOfferType(OfferType.BUY);
         o2.setCategory(Category.VEGETABLES);
-        o2.setPrice(1.8f);
+        o2.setPrice(BigDecimal.valueOf(1.80));
         o2.setQuality(Quality.II);
         o2.setUnit(Unit.T);
-        o2.setPublishDate(LocalDateTime.now());
 
         Offer o3 = new Offer();
         o3.setName("ABC2");
         o3.setOfferType(OfferType.BUY);
         o3.setCategory(Category.VEGETABLES);
-        o3.setPrice(1.8f);
+        o3.setPrice(BigDecimal.valueOf(1.8));
         o3.setQuality(Quality.II);
         o3.setUnit(Unit.T);
-        o3.setPublishDate(LocalDateTime.now());
 
         offerRepository.save(o1);
         offerRepository.save(o2);

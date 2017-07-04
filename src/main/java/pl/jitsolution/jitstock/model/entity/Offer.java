@@ -5,15 +5,13 @@ import pl.jitsolution.jitstock.model.OfferType;
 import pl.jitsolution.jitstock.model.Quality;
 import pl.jitsolution.jitstock.model.Unit;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Offer implements Serializable{
+public class Offer implements Serializable {
 
     private static final long serialVersionUID = 6953249277206142508L;
 
@@ -29,15 +27,16 @@ public class Offer implements Serializable{
 
     private Quality quality;
 
-    private float price;
+    private BigDecimal price;
 
     private Unit unit;
 
     private LocalDateTime publishDate;
 
-    public Offer() {}
+    public Offer() {
+    }
 
-    public Offer(String name, OfferType offerType, Category category, Quality quality, float price, Unit unit) {
+    public Offer(String name, OfferType offerType, Category category, Quality quality, BigDecimal price, Unit unit) {
         this.name = name;
         this.offerType = offerType;
         this.category = category;
@@ -55,7 +54,7 @@ public class Offer implements Serializable{
     }
 
     public void setName(String name) {
-        this.name= name;
+        this.name = name;
     }
 
     public OfferType getOfferType() {
@@ -82,11 +81,11 @@ public class Offer implements Serializable{
         this.quality = quality;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -104,6 +103,13 @@ public class Offer implements Serializable{
 
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (publishDate == null) {
+            publishDate = LocalDateTime.now();
+        }
     }
 }
 
