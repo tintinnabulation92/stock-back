@@ -48,7 +48,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JitStockApplication.class)
 @WebAppConfiguration
-
 public class OfferControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -57,8 +56,6 @@ public class OfferControllerTest {
 
     private MockMvc mockMvc;
 
-
-    private List<Offer> offerList = new ArrayList<>();
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
@@ -86,6 +83,7 @@ public class OfferControllerTest {
 
     }
 
+
     @Test
     public void readSingleOffer() throws Exception {
         //GIVEN
@@ -93,12 +91,11 @@ public class OfferControllerTest {
         offer.setName("ABC1");
         offer.setOfferType(OfferType.SELL);
         offer.setCategory(Category.FRUITS);
-        offer.setPrice(new BigDecimal(12.321).setScale(6));
+        offer.setPrice(BigDecimal.valueOf(12.3));
         offer.setQuality(Quality.I);
         offer.setUnit(Unit.KG);
-        offer.setPublishDate(LocalDateTime.now());
 
-        Offer savedOffer=offerRepository.save(offer);
+        Offer savedOffer = offerRepository.save(offer);
 
         //WHEN
         mockMvc.perform(get("/api/offer/" + savedOffer.getId()))
@@ -109,9 +106,10 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$.name", is(offer.getName())))
                 .andExpect(jsonPath("$.offerType", is(offer.getOfferType().toString())))
                 .andExpect(jsonPath("$.category", is(offer.getCategory().toString())))
-                .andExpect(jsonPath("$.price", is((offer.getPrice()))))
+                .andExpect(jsonPath("$.price").value(offer.getPrice()))
                 .andExpect(jsonPath("$.quality", is(offer.getQuality().toString())))
-                .andExpect(jsonPath("$.unit", is(offer.getUnit().toString())));
+                .andExpect(jsonPath("$.unit", is(offer.getUnit().toString())))
+                .andExpect(jsonPath("$.publishDate", is(savedOffer.getPublishDate().toString())));
     }
 
     @Test
@@ -121,14 +119,15 @@ public class OfferControllerTest {
         offer.setName("ABC1");
         offer.setOfferType(OfferType.SELL);
         offer.setCategory(Category.FRUITS);
-        offer.setPrice(new BigDecimal(12));
+        offer.setPrice(BigDecimal.valueOf(2.1));
         offer.setQuality(Quality.I);
         offer.setUnit(Unit.KG);
         offer.setPublishDate(LocalDateTime.now());
         Offer savedOffer = offerRepository.save(offer);
 
+
         //WHEN
-        mockMvc.perform(get("/api/offer/" + savedOffer.getId()+1))
+        mockMvc.perform(get("/api/offer/" + savedOffer.getId() + 1))
                 //THEN
                 .andExpect(status().isNotFound());
     }
@@ -136,11 +135,13 @@ public class OfferControllerTest {
     @Test
     public void readOffers() throws Exception {
         //GIVEN
+        offerRepository.deleteAll();
+
         Offer offer1 = new Offer();
         offer1.setName("ABC1");
         offer1.setOfferType(OfferType.SELL);
         offer1.setCategory(Category.FRUITS);
-        offer1.setPrice(new BigDecimal(12.1).setScale(6));
+        offer1.setPrice(BigDecimal.valueOf(8.1));
         offer1.setQuality(Quality.I);
         offer1.setUnit(Unit.KG);
         offer1.setPublishDate(LocalDateTime.now());
@@ -149,13 +150,13 @@ public class OfferControllerTest {
         offer2.setName("ABC2");
         offer2.setOfferType(OfferType.BUY);
         offer2.setCategory(Category.VEGETABLES);
-        offer2.setPrice(new BigDecimal(2.9).setScale(6));
+        offer2.setPrice(BigDecimal.valueOf(7.1));
         offer2.setQuality(Quality.II);
         offer2.setUnit(Unit.KG);
         offer2.setPublishDate(LocalDateTime.now());
 
-        Offer savedOffer1=offerRepository.save(offer1);
-        Offer savedOffer2=offerRepository.save(offer2);
+        Offer savedOffer1 = offerRepository.save(offer1);
+        Offer savedOffer2 = offerRepository.save(offer2);
 
         //WHEN
         mockMvc.perform(get("/api/offers"))
@@ -167,23 +168,24 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$[0].name", is(offer1.getName())))
                 .andExpect(jsonPath("$[0].offerType", is(offer1.getOfferType().toString())))
                 .andExpect(jsonPath("$[0].category", is(offer1.getCategory().toString())))
-                .andExpect(jsonPath("$[0].price", is(offer1.getPrice())))
+                .andExpect(jsonPath("$[0].price").value(offer1.getPrice()))
                 .andExpect(jsonPath("$[0].quality", is(offer1.getQuality().toString())))
                 .andExpect(jsonPath("$[0].unit", is(offer1.getUnit().toString())))
+                .andExpect(jsonPath("$[0].publishDate", is(savedOffer1.getPublishDate().toString())))
                 .andExpect(jsonPath("$[1].id", is(savedOffer2.getId().intValue())))
                 .andExpect(jsonPath("$[1].name", is(offer2.getName())))
                 .andExpect(jsonPath("$[1].offerType", is(offer2.getOfferType().toString())))
                 .andExpect(jsonPath("$[1].category", is(offer2.getCategory().toString())))
-                .andExpect(jsonPath("$[1].price", is(offer2.getPrice())))
-                .andExpect(jsonPath("$[1].quality",  is(offer2.getQuality().toString())))
-                .andExpect(jsonPath("$[1].unit", is(offer2.getUnit().toString())));
+                .andExpect(jsonPath("$[1].price").value(offer2.getPrice()))
+                .andExpect(jsonPath("$[1].quality", is(offer2.getQuality().toString())))
+                .andExpect(jsonPath("$[1].unit", is(offer2.getUnit().toString())))
+                .andExpect(jsonPath("$[1].publishDate", is(savedOffer2.getPublishDate().toString())));
     }
 
     @Test
     public void readOffersWhenNoContent() throws Exception {
         //GIVEN
-
-        //Empty table
+        offerRepository.deleteAll();
 
         //WHEN
         mockMvc.perform(get("/api/offers"))
@@ -199,7 +201,7 @@ public class OfferControllerTest {
         offer.setName("ABC1");
         offer.setOfferType(OfferType.SELL);
         offer.setCategory(Category.FRUITS);
-        offer.setPrice(new BigDecimal(1.2));
+        offer.setPrice(BigDecimal.valueOf(8.7));
         offer.setQuality(Quality.I);
         offer.setUnit(Unit.KG);
 
@@ -219,7 +221,7 @@ public class OfferControllerTest {
         offerWithId.setName("ABC1");
         offerWithId.setOfferType(OfferType.SELL);
         offerWithId.setCategory(Category.FRUITS);
-        offerWithId.setPrice(new BigDecimal(2.4));
+        offerWithId.setPrice(BigDecimal.valueOf(8.7));
         offerWithId.setQuality(Quality.I);
         offerWithId.setUnit(Unit.KG);
 

@@ -1,14 +1,15 @@
 package pl.jitsolution.jitstock.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.jitsolution.jitstock.model.Category;
 import pl.jitsolution.jitstock.model.OfferType;
 import pl.jitsolution.jitstock.model.Quality;
 import pl.jitsolution.jitstock.model.Unit;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 
 @Entity
 public class Offer implements Serializable{
@@ -30,12 +31,13 @@ public class Offer implements Serializable{
     @Enumerated(EnumType.STRING)
     private Quality quality;
 
-    @Column(nullable= false, scale=6)
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     private Unit unit;
 
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime publishDate;
 
     public Offer() {}

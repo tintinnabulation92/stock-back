@@ -1,4 +1,5 @@
 package pl.jitsolution.jitstock.test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -9,7 +10,9 @@ import pl.jitsolution.jitstock.model.Quality;
 import pl.jitsolution.jitstock.model.Unit;
 import pl.jitsolution.jitstock.model.entity.Offer;
 import pl.jitsolution.jitstock.repository.OfferRepository;
+
 import java.math.BigDecimal;
+
 
 @Component
 public class OfferProvider implements ApplicationRunner {
@@ -17,6 +20,7 @@ public class OfferProvider implements ApplicationRunner {
 
     @Autowired
     private OfferRepository offerRepository;
+
     @Override
     public void run(ApplicationArguments arg) throws Exception {
 
@@ -37,7 +41,7 @@ public class OfferProvider implements ApplicationRunner {
         o2.setUnit(Unit.T);
 
         Offer o3 = new Offer();
-        o3.setName("ABC2");
+        o3.setName("ABC3");
         o3.setOfferType(OfferType.BUY);
         o3.setCategory(Category.VEGETABLES);
         o3.setPrice(new BigDecimal(9.1));
