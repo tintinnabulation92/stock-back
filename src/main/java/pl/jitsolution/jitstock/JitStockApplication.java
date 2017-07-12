@@ -22,7 +22,7 @@ public class JitStockApplication {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/offers").allowedOrigins("http://localhost:8080");
                 registry.addMapping("/api/offer/create").allowedOrigins("http://localhost:8080");
-                registry.addMapping("/offer/{offerId}").allowedOrigins("http://localhost:8080");
+                registry.addMapping("/api/offer/{offerId}").allowedOrigins("http://localhost:8080");
             }
         };
     }

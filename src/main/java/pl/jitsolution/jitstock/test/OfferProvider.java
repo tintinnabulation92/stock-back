@@ -24,8 +24,10 @@ public class OfferProvider implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments arg) throws Exception {
 
+
         Offer o1 = new Offer();
-        o1.setName("ABC1");
+
+        o1.setName("Oferta 1");
         o1.setOfferType(OfferType.SELL);
         o1.setCategory(Category.FRUITS);
         o1.setPrice(new BigDecimal(12));
